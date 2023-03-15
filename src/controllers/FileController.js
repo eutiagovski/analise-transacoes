@@ -1,9 +1,15 @@
 const fs = require("fs");
 const csv = require("csv-parse");
+const Registro = require('../models/Registro')
 
 exports.sendIndex = async (req, res) => {
   res.render("index");
 };
+
+exports.getRegistros = async (req, res) => {
+  const listaRegistros = await Registro.findAll();
+  res.send(listaRegistros)
+}
 
 exports.sendFile = async (req, res) => {
   console.log(req.file); // primeira tarefa
@@ -28,14 +34,15 @@ exports.sendFile = async (req, res) => {
     })
     .on("end", () => {
       // data/hora que a importação foi realizada e data das transações dessa importação.
-      const registro = {
+      var registro = new Registro({
         dataTransacao: results[0].dataHoraTransacao,
         dataImportacao: new Date().toISOString(),
-      };
-
-      console.log(registro)
-
-      res.send("Arquivo enviado");
+      });
+      registro.save(); // salva o registro no banco
+      
+      
+      
+      res.render('index') // atualiza a página principal com o novo registro
     })
     .on("error", (err) => {
       res.send("Ocorreu um erro desconhecido no upload.");

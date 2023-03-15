@@ -41,5 +41,23 @@
       </div>
     </div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    const getRegistros = async () => {
+      // event.preventDefault();
+      const { data } = await axios.get('/registros');
+
+      data.reverse().forEach(element => {
+        document.getElementById('tableData').innerHTML += `
+        <tr>
+            <td>${new Date(element.dataTransacao).toLocaleDateString()}</td>
+            <td>${new Date(element.dataImportacao).toLocaleDateString()} - ${new Date(element.dataImportacao).toLocaleTimeString()}</td>
+          </tr>
+        `   
+      });
+    };
+    getRegistros()
+  </script>
   
 </html>
