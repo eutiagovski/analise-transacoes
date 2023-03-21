@@ -13,7 +13,10 @@ const Registro = sequelize.define("registro", {
   dataImportacao: {
     type: DataTypes.STRING,
   },
+  filePath: {
+    type: DataTypes.STRING
+  }
 });
 
-// Registro.sync({force: true});
+Registro.sync();
 module.exports = Registro;

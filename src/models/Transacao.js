@@ -31,6 +31,10 @@ const Transacao = sequelize.define("transacao", {
   dataHoraTransacao: {
     type: DataTypes.STRING,
   },
+  filePath: {
+    type: DataTypes.STRING
+  }
 });
-
+// Transacao.sync({force: true});
+Transacao.sync();
 module.exports = Transacao;
